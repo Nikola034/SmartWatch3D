@@ -1,29 +1,3 @@
-/*
- * PHONG LIGHTING FRAGMENT SHADER
- * ==============================
- * This shader implements the Phong lighting model with two light sources:
- * 1. Main sun light (uLight) - primary scene illumination
- * 2. Watch screen light (uScreenLight) - weak emissive glow from watch
- *
- * PHONG MODEL COMPONENTS:
- * -----------------------
- * Ambient:  Base illumination, independent of light direction
- *           Simulates indirect light bouncing around the scene
- *
- * Diffuse:  Light scattered equally in all directions from surface
- *           Intensity depends on angle between surface normal and light direction
- *           Formula: max(dot(normal, lightDir), 0.0)
- *
- * Specular: Mirror-like reflection creating shiny highlights
- *           Depends on view direction and reflected light direction
- *           Formula: pow(max(dot(viewDir, reflectDir), 0.0), shininess)
- *
- * EMISSIVE MODE:
- * --------------
- * When uIsEmissive=1, the object emits light (like a screen).
- * Lighting calculations are skipped; texture color is output directly.
- */
-
 #version 330 core
 
 // Light source properties
@@ -60,16 +34,7 @@ uniform int uUseTexture;      // 1 = sample texture, 0 = use solid color
 uniform vec4 uColor;          // Solid color (or texture multiplier)
 uniform int uIsEmissive;      // 1 = emit light, 0 = receive light
 
-/**
- * Calculates the contribution of a single light source
- * Uses the Phong reflection model: ambient + diffuse + specular
- *
- * @param light - Light source properties
- * @param norm - Normalized surface normal
- * @param viewDir - Normalized direction from fragment to camera
- * @param baseColor - Surface base color (from texture or solid color)
- * @return Total light contribution as RGB
- */
+
 vec3 calculateLight(Light light, vec3 norm, vec3 viewDir, vec3 baseColor) {
     // === AMBIENT ===
     // Always present, simulates indirect light
